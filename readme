@@ -1,0 +1,127 @@
+Got it 👍 here’s the **full README.md in one file** (ready to drop into your GitHub repo):
+
+```markdown
+# 🚀 Fullstack App with Docker Compose
+
+This project sets up a **Postgres Database**, a **Backend (Bun + Prisma)**, and a **Frontend (Vite/React)** using **Docker** and **Docker Compose**.  
+
+You can run services **individually** or all together with **docker-compose**.
+
+---
+
+## 📂 Project Structure
+
+```
+
+.
+├── backend/     # Bun + Prisma backend service
+├── frontend/    # React + Vite frontend service
+└── docker-compose.yml
+
+````
+
+---
+
+## ⚙️ Prerequisites
+
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+---
+
+## 🐳 Run Services Individually
+
+### 1️⃣ Start Postgres
+```bash
+docker run --name postgres -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin123 -e POSTGRES_DB=mydb -p 5432:5432 -d postgres:latest
+````
+
+### 2️⃣ Start Backend
+
+Make sure your **backend/Dockerfile** is set up for Prisma + Bun.
+
+```bash
+cd backend
+docker build -t backend .
+docker run --name backend -e DATABASE_URL=postgresql://admin:admin123@localhost:5432/mydb -p 3000:3000 backend
+```
+
+👉 Run Prisma migrations inside the container if needed:
+
+```bash
+docker exec -it backend bun prisma migrate deploy
+```
+
+### 3️⃣ Start Frontend
+
+```bash
+cd frontend
+docker build -t frontend .
+docker run --name frontend \
+  -p 5173:5173 \
+  frontend
+```
+
+---
+
+## 📦 Run with Docker Compose
+
+Simply run:
+
+```bash
+docker-compose up --build
+```
+
+This will spin up:
+
+* **Postgres** → `localhost:5432`
+* **Backend** → `localhost:3000`
+* **Frontend** → `localhost:5173`
+
+Stop everything with:
+
+```bash
+docker-compose down
+```
+
+---
+
+## 🗂️ Volumes & Data Persistence
+
+* Postgres data is stored in a **named volume** `pgdata`.
+* Even if the container restarts, your data will persist.
+
+To reset everything:
+
+```bash
+docker-compose down -v
+```
+
+---
+
+## 🌐 Networking
+
+* All services share the `demo` bridge network (created automatically by Compose).
+* The backend connects to Postgres at `postgres:5432`.
+* The frontend talks to the backend at `http://localhost:3000`.
+
+---
+
+## ✅ Notes
+
+* First, try running **services individually** to confirm everything works.
+* Once verified, use **docker-compose** for an easier workflow.
+* Run Prisma migrations (`bun prisma migrate deploy`) after starting backend.
+
+---
+
+## 📜 License
+
+MIT License
+
+```
+
+---
+
+Do you want me to also include an **example `.env` file** for both backend and docker-compose (with `DATABASE_URL` pre-set), so contributors don’t have to type it manually?
+```
