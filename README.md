@@ -111,14 +111,7 @@ docker-compose down -v
 
 ---
 
-## 🎨 Color Reference
 
-| Color      | Example                                                               |
-| ---------- | --------------------------------------------------------------------- |
-| Dark Blue  | ![#0a192f](https://via.placeholder.com/50x20/0a192f?text=+) `#0a192f` |
-| Light Gray | ![#f8f8f8](https://via.placeholder.com/50x20/f8f8f8?text=+) `#f8f8f8` |
-| Green      | ![#00b48a](https://via.placeholder.com/50x20/00b48a?text=+) `#00b48a` |
-| Teal       | ![#00d1a0](https://via.placeholder.com/50x20/00d1a0?text=+) `#00d1a0` |
 
 ---
 
