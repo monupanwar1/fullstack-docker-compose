@@ -1,40 +1,52 @@
-### 🚀 Fullstack App with Docker Compose
 
-This project sets up a **Postgres Database**, a **Backend (Bun + Prisma)**, and a **Frontend (Vite/React)** using **Docker** and **Docker Compose**.
 
-You can run services **individually** or all together with **docker-compose**.
+---
 
------
+# 🚀 Fullstack App with Docker Compose
 
-### 📂 Project Structure
+![GitHub](https://img.shields.io/github/license/your-username/your-repo)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge\&logo=docker\&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge\&logo=react\&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge\&logo=vite\&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-0C344B?style=for-the-badge\&logo=prisma\&logoColor=white)
 
-```
+A **Fullstack application** with **Postgres**, **Backend (Bun + Prisma)**, and **Frontend (React + Vite)** using **Docker Compose**.
+
+Run services **individually** or **all together** with Docker Compose.
+
+---
+
+## 📂 Project Structure
+
+```text
 .
 ├── backend/      # Bun + Prisma backend service
 ├── frontend/     # React + Vite frontend service
 └── docker-compose.yml
 ```
 
------
+---
 
-### ⚙️ Prerequisites
+## ⚙️ Prerequisites
 
-  - **[Docker](https://www.docker.com/get-started)**
-  - **[Docker Compose](https://docs.docker.com/compose/)**
+| Tool           | Version/Link                                      |
+| -------------- | ------------------------------------------------- |
+| Docker         | [Get Started](https://www.docker.com/get-started) |
+| Docker Compose | [Docs](https://docs.docker.com/compose/)          |
 
------
+---
 
-### 🐳 Run Services Individually
+## 🐳 Run Services Individually
 
-#### 1️⃣ Start Postgres
+### 1️⃣ Start Postgres
 
 ```bash
 docker run --name postgres -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin123 -e POSTGRES_DB=mydb -p 5432:5432 -d postgres:latest
 ```
 
-#### 2️⃣ Start Backend
+---
 
-Make sure your **backend/Dockerfile** is set up for Prisma + Bun.
+### 2️⃣ Start Backend
 
 ```bash
 cd backend
@@ -42,75 +54,77 @@ docker build -t backend .
 docker run --name backend -e DATABASE_URL=postgresql://admin:admin123@localhost:5432/mydb -p 3000:3000 backend
 ```
 
-**👉 Run Prisma migrations inside the container if needed:**
+**Run Prisma migrations:**
 
 ```bash
 docker exec -it backend bun prisma migrate deploy
 ```
 
-#### 3️⃣ Start Frontend
+---
+
+### 3️⃣ Start Frontend
 
 ```bash
 cd frontend
 docker build -t frontend .
-docker run --name frontend \
-  -p 5173:5173 \
-  frontend
+docker run --name frontend -p 5173:5173 frontend
 ```
 
------
+---
 
-### 📦 Run with Docker Compose
-
-Simply run:
+## 📦 Run All Services with Docker Compose
 
 ```bash
 docker-compose up --build
 ```
 
-This will spin up:
+Services & URLs:
 
-  * **Postgres** → `localhost:5432`
-  * **Backend** → `localhost:3000`
-  * **Frontend** → `localhost:5173`
+| Service  | URL              |
+| -------- | ---------------- |
+| Postgres | `localhost:5432` |
+| Backend  | `localhost:3000` |
+| Frontend | `localhost:5173` |
 
-Stop everything with:
+Stop everything:
 
 ```bash
 docker-compose down
 ```
 
------
+---
 
-### 🗂️ Volumes & Data Persistence
+## 🗂️ Volumes & Data Persistence
 
-  * Postgres data is stored in a **named volume** `pgdata`.
-  * Even if the container restarts, your data will persist.
+* Postgres data stored in **named volume** `pgdata`.
+* Data persists across container restarts.
 
-To reset everything:
+Reset everything:
 
 ```bash
 docker-compose down -v
 ```
 
------
+---
 
-### 🌐 Networking
+## 🌐 Networking
 
-  * All services share the `demo` bridge network (created automatically by Compose).
-  * The backend connects to Postgres at `postgres:5432`.
-  * The frontend talks to the backend at `http://localhost:3000`.
+* All services share the `demo` bridge network (auto-created).
+* Backend connects to Postgres at `postgres:5432`.
+* Frontend connects to backend at `http://localhost:3000`.
 
------
+---
 
-### ✅ Notes
+## ✅ Notes
 
-  * First, try running **services individually** to confirm everything works.
-  * Once verified, use **docker-compose** for an easier workflow.
-  * Run Prisma migrations (`bun prisma migrate deploy`) after starting backend.
+* Run **services individually first** to verify everything works.
+* Use **docker-compose** for an easier workflow.
+* Run Prisma migrations (`bun prisma migrate deploy`) after starting backend.
 
------
+---
 
-### 📜 License
+## 📜 License
 
 MIT License
+
+
